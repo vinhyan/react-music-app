@@ -1,0 +1,55 @@
+.playlist-container {
+    width: 23rem;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: auto;
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+    // background-color: #7b2cbf;
+    background: rgb(90,24,154);
+    background: linear-gradient(0deg, rgba(90,24,154,1) 12%, rgba(123,44,191,1) 44%, rgba(157,78,221,1) 100%);
+    z-index: 1;
+    transform: translate(-100%);
+    opacity: 0;
+    transition: all 1s ease;
+    
+   
+
+    h2 {
+        height: 15vh;
+        padding: 1.5rem 1rem 1rem 2rem;
+    }
+    
+}
+
+.active-playlist {
+    transform: translate(0);
+    opacity: 1;
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #c77dff transparent;
+}
+
+*::-webkit-scrollbar {
+    width: 5px;
+}
+
+*::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #c77dff;
+    border-radius: 25px;
+    border: transparent;
+
+}
+
+@media screen and (max-width: 508px) {
+    .playlist-container {
+        width: 100%;
+    }
+}

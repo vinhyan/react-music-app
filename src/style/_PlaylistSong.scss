@@ -1,0 +1,38 @@
+.playlist-song-container {
+    display: flex;
+    align-items: center;
+    padding: 2rem 1rem;
+    cursor: pointer;
+    transition: all 0.7s ease-in-out;
+    
+    
+
+    img {
+        width: 40%;
+    }
+
+    .playlist-song-info {
+        padding-left: 1rem;
+
+        h3 {
+            font-size: 1rem;
+            padding-bottom: 0.3rem;
+        }
+         h4 {
+             font-size: 0.8rem;
+         }
+        
+    }
+
+    &:hover {
+        background-color: #b25bf5;
+        
+        color:#240046;
+        
+    }
+}
+
+.selected-song {
+    background-color: #a24ce4;
+    color:#240046;
+}
