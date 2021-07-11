@@ -5,7 +5,12 @@ import {
   faPause,
   faAngleDoubleRight,
   faAngleDoubleLeft,
+  faRedoAlt,
+  faRandom,
 } from "@fortawesome/free-solid-svg-icons";
+
+import repeatIcon from "../img/repeat.png";
+import shuffleIcon from "../img/shuffle.png";
 
 const Player = ({
   songs,
@@ -16,11 +21,16 @@ const Player = ({
   songInfo,
   setSongInfo,
   audioRef,
+  isRepeat,
+  setIsRepeat,
+  isShuffle,
+  setIsShuffle,
 }) => {
   // Event Handlers
   const playHandler = () => {
     isPlaying ? audioRef.current.pause() : audioRef.current.play();
     setIsPlaying(!isPlaying);
+
   };
 
   const timeUpdateHandler = (e) => {
@@ -34,14 +44,38 @@ const Player = ({
     setSongInfo({ ...songInfo, currentTime: e.target.value });
   };
 
-  const skip = async (type) => {
+  const playModeHandler = (playMode) => {
+    if (playMode === "repeat") {
+      setIsRepeat(!isRepeat);
+      if (isShuffle) setIsShuffle(false);
+    } else if (playMode === "shuffle") {
+      setIsShuffle(!isShuffle);
+      if (isRepeat) setIsRepeat(false);
+    }
+  };
+
+  const onEndedHandler = async () => {
+    if (isRepeat) {
+      await setCurrentSong(currentSong);
+      audioRef.current.play();
+    } else if (isShuffle) {
+      const randomSong = songs[Math.floor(Math.random() * songs.length)];
+      await setCurrentSong(randomSong);
+      audioRef.current.play();
+    } else {
+      skip("forward");
+    }
+  };
+
+  // Skip song function
+  const skip = async (skipType) => {
     const currentIndex = songs.indexOf(currentSong);
 
     let skippedSong;
 
-    if (type === "forward") {
+    if (skipType === "forward") {
       skippedSong = songs[(currentIndex + 1) % songs.length];
-    } else if (type === "backward") {
+    } else if (skipType === "backward") {
       if ((currentIndex - 1) % songs.length === -1) {
         skippedSong = songs[songs.length - 1];
       } else {
@@ -65,20 +99,36 @@ const Player = ({
     );
   };
 
+  // Track styling
+  const trackPercent = Math.round((songInfo.currentTime / songInfo.duration) * 100);
+  console.log(trackPercent)
+  const trackStyling = {
+    background: `linear-gradient(90deg, #d100d1 ${trackPercent}%, rgb(235, 235, 255) ${trackPercent}%)`,
+  };
+
   return (
     <div className="player-container">
       <div className="time-control">
         <p>{timeConverter(songInfo.currentTime)}</p>
-        <input
-          min={0}
-          max={songInfo.duration || 0}
-          value={songInfo.currentTime}
-          onChange={changeSongTimeHandler}
-          type="range"
-        />
+        <div style={trackStyling} className="track">
+          <input
+            min={0}
+            max={songInfo.duration || 0}
+            value={songInfo.currentTime}
+            onChange={changeSongTimeHandler}
+            type="range"
+          />
+          <div className="animate-track"></div>
+        </div>
         <p>{songInfo.duration ? timeConverter(songInfo.duration) : "0:00"}</p>
       </div>
       <div className="play-control">
+        <FontAwesomeIcon
+
+          icon={faRedoAlt}
+          onClick={() => playModeHandler("repeat")}
+          className={isRepeat ? "active-playmode" : ""}
+        />
         <FontAwesomeIcon
           onClick={() => skip("backward")}
           className="backward"
@@ -97,13 +147,18 @@ const Player = ({
           size="2x"
           icon={faAngleDoubleRight}
         />
+        <FontAwesomeIcon
+          icon={faRandom}
+          onClick={() => playModeHandler("shuffle")}
+          className={isShuffle ? "active-playmode" : ""}
+        />
       </div>
       <audio
         onTimeUpdate={timeUpdateHandler}
         onLoadedMetadata={timeUpdateHandler}
         ref={audioRef}
         src={currentSong.audio}
-        onEnded={() => skip("forward")}
+        onEnded={onEndedHandler}
       ></audio>
     </div>
   );

@@ -15,6 +15,8 @@ function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [songInfo, setSongInfo] = useState({ duration: 0, currentTime: 0 });
   const [playlistStatus, setPlaylistStatus] = useState(false);
+  const [isRepeat, setIsRepeat] = useState(false);
+  const [isShuffle, setIsShuffle] = useState(false);
 
   const audioRef = useRef(null);
 
@@ -35,6 +37,10 @@ function App() {
         setIsPlaying={setIsPlaying}
         songInfo={songInfo}
         setSongInfo={setSongInfo}
+        isRepeat={isRepeat}
+        setIsRepeat={setIsRepeat}
+        isShuffle={isShuffle}
+        setIsShuffle={setIsShuffle}
       />
 
       <Playlist

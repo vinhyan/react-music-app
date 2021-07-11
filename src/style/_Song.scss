@@ -45,6 +45,10 @@
   }
 }
 
+.cover-active {
+  animation: circle 20s linear infinite;
+}
+
 @keyframes circle {
   0% {
     transform: rotate(0deg);

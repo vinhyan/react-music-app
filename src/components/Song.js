@@ -1,10 +1,6 @@
 import React from "react";
 
 const Song = ({ currentSong, isPlaying }) => {
-  // Cover image animation
-  const coverActive = {
-    animation: "circle 20s linear infinite",
-  };
 
   return (
     <div className="song-container">
@@ -12,7 +8,7 @@ const Song = ({ currentSong, isPlaying }) => {
         <img
           src={currentSong.cover}
           alt={currentSong.name}
-          style={isPlaying ? coverActive : {}}
+          className={isPlaying ? "cover-active" : ""}
         />
         <div className="cover-core"></div>
       </div>
