@@ -9,8 +9,6 @@ import {
   faRandom,
 } from "@fortawesome/free-solid-svg-icons";
 
-import repeatIcon from "../img/repeat.png";
-import shuffleIcon from "../img/shuffle.png";
 
 const Player = ({
   songs,
