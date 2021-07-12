@@ -57,7 +57,9 @@ const Player = ({
       await setCurrentSong(currentSong);
       audioRef.current.play();
     } else if (isShuffle) {
-      const randomSong = songs[Math.floor(Math.random() * songs.length)];
+      const currentIndex = songs.indexOf(currentSong);
+      let randomSong = songs[Math.floor(Math.random() * songs.length)];
+      if (randomSong === songs[currentIndex]) randomSong = songs[currentIndex + 1];
       await setCurrentSong(randomSong);
       audioRef.current.play();
     } else {

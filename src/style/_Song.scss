@@ -8,6 +8,7 @@
   .cover-wrap {
     // width: 30%;
     width: 300px;
+    height: 300px;
     max-width: 60%;
     position: relative;
     background-color: rgb(19, 19, 19);
@@ -39,7 +40,6 @@
     text-align: center;
 
     .song-name {
-      // padding: 2rem 1rem 1rem 1rem;
       padding: 1rem 0;
     }
   }
